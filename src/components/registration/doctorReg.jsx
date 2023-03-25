@@ -31,11 +31,11 @@ function RegisterDoctor ({user, userInfo}) {
         if(!userInfo) return
         setFirstname(userInfo.firstname || "")
         setLastname(userInfo.lastname || "")
-        setStaffID(userInfo.staffID || "")
+        setStaffID(userInfo.staffId || "")
         setClinic(userInfo.clinic || "")
         setSpecialization(userInfo.specialization || "")
         setEmail(userInfo.email || "")
-        setPhoneNumber(userInfo.phonenumber || "")
+        setPhoneNumber(userInfo.phoneNumber || "")
         console.log(userInfo)
     },[userInfo])
 
@@ -50,14 +50,14 @@ function RegisterDoctor ({user, userInfo}) {
 
         if(isValidEmail && isValidPhoneNumber) {
             const doctor = {
-            doctorid: username,
+            username: username,
             firstname: firstname,
             lastname: lastname,
-            staffID: staffid,
+            staffId: staffid,
             clinic: clinic,
             specialization: specialization,
             email: email,
-            phonenumber: phonenumber
+            phoneNumber: phonenumber
             }
 
             const result = await doctorRequests(requestConfig).registerDoctor(doctor)

@@ -14,7 +14,6 @@ function AddRecordPanel ({user = {}}) {
         let record = {
             patientUsername: document.getElementById('patient-input').value,
             doctorUsername: username,
-            date: document.getElementById('date-input').value,
             subject: document.getElementById('subject-input').value,
             log: document.getElementById('log-input').value
         }
@@ -23,7 +22,7 @@ function AddRecordPanel ({user = {}}) {
         let result = await doctorRequests(requestConfig).postRecord(record)
         console.log(result)
 
-        if(result.statusCode == 201) {
+        if(result.statusCode == 200) {
             toast('Record Posted!', {
                 id: "Hello",
                 duration: 5000,
