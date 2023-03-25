@@ -1,0 +1,40 @@
+/* body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+} */
+
+body {
+    font-family: "Poppins";
+}
+
+/* General DOM Elements*/
+
+.inner-box {
+  background-color: #EDE7DC;
+  display: inline-block;
+  width: 99%;
+  padding: 3% 5% 3% 5%;
+  border-width: 10px;
+  border-color: #BDC3CB;
+}
+
+/* Buttons for homepage (purely for testing) */
+.test-button {
+  color: #FFFFFF;
+  background-color: #153243;
+  padding: 0.3em 1.3em 0.3em 1.3em;
+  margin: 1em 1em 1em 1em;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
