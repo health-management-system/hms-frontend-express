@@ -36,38 +36,14 @@ function Profile() {
     const loadInfoInit = async (username: string) => {
         setIsLoadingPH(true);
 
-        // If lastEvaluatedKey for current page exists use it
-        let lastEvaluatedKey = null;
-        if (paginationKeys[currentPage] != null) {
-            lastEvaluatedKey = paginationKeys[currentPage];
-        } else {
-            lastEvaluatedKey = lastEvaluatedKeyRef.current || "";
-        }
-
         const result = await patientRequests(requestConfig).getPatientInfo(
             username,
             currentPage.toString(),
-            "10",
-            lastEvaluatedKey
         );
         setPatientInfoAndRecords(result.result);
         if (result.result != null && !result.result.error) {
-            setLastPage(
-                Math.ceil(
-                    result.result.records.total_items /
-                        result.result.records.items_per_page
-                )
-            );
-
-            lastEvaluatedKeyRef.current =
-                result.result?.records.lastEvaluatedKey || "";
-
-            setCurrentPage(result.result.records.current_page);
-
-            // Add the lastEvaluatedKey to the array at index currentPage
-            let arr = paginationKeys;
-            arr[currentPage + 1] = result.result.records.lastEvaluatedKey;
-            setPaginationKeys(arr);
+            setLastPage(result.result.records.pageCount);
+            setCurrentPage(result.result.records.pageNumber);
         } else {
             // https://emojipedia.org/symbols/
             toast("Please add your information", {
@@ -125,14 +101,16 @@ function Profile() {
         return [
             { label: "First Name:", value: patientInfo.firstname },
             { label: "Last Name:", value: patientInfo.lastname },
-            { label: "Date of Birth:", value: patientInfo.dateofbirth },
+            { label: "Date of Birth:", value: patientInfo.dateOfBirth },
             { label: "Email:", value: patientInfo.email },
             { label: "Address:", value: patientInfo.address },
-            { label: "Phone Number:", value: patientInfo.phonenumber },
-            { label: "Postal Code:", value: patientInfo.postalcode },
-            { label: "Health Card No:", value: patientInfo.healthcardnumber },
+            { label: "Phone Number:", value: patientInfo.phoneNumber },
+            { label: "Postal Code:", value: patientInfo.postalCode },
+            { label: "Health Card No:", value: patientInfo.healthCardNo },
         ];
     };
+
+    console.log(patientInfoAndRecords)
 
     return (
         <div className="md:px-20 px-10 py-10">
@@ -177,11 +155,11 @@ function Profile() {
                         patientInfoAndRecords.records &&
                         patientInfoAndRecords?.records.records.map((record) => {
                             return {
-                                dateTime: record.dateTime,
+                                dateTime: record.date,
                                 clinic: record.clinic,
                                 subject: record.subject,
                                 doctor: record.doctorName,
-                                id: record.recordid,
+                                id: record._id,
                             };
                         })) ||
                     []
