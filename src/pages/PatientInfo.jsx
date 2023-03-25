@@ -5,35 +5,37 @@ import { generalRequests } from '../utils/requests/general'
 import { requestConfig } from "../utils/requests/requestConfig";
 import PageLoading from '../components/shared/PageLoading';
 import toast, { Toaster } from 'react-hot-toast';
+import Cookies from 'js-cookie'
 
 function PatientInfo() {
-   
-    // REMOVE LATER
-    let user = {
-        username: "placeholder",
+
+    function signOut () {
+        Cookies.remove('username')
+        Cookies.remove('role')
+        navigate('/')
     }
-    function signOut () {return null}
 
     // Declarations
-    const username = user.username
+    const [username, setUsername] = useState(Cookies.get('username'))
+    const [role, setRole] = useState(Cookies.get('role'))
     const [isLoading, setLoading] = useState(false)
     const [currentPath, setPath] = useState('/patientinfo')
     const location = useLocation()
     const navigate = useNavigate()
 
     // Method to check if the user is a Patient
-    const checkRole = async(username) => {
+    const checkRole = () => {
         // Set Loading State True
         setLoading(true)
-        // Request role of user (true -> Doctor && false -> Patient)
-        const isDoctor = await generalRequests(requestConfig).isDoctor(username)
-        console.log('Is Doctor: ' + isDoctor)
+        console.log('Role: ' + role)
         // If not a patient (doctor user) then nagivate user to /doctorinfo
-        if(isDoctor) {
+        if(role == 'DOCTOR') {
             // Console log invalid permissions
             console.log('Error: Access Denied')
             // Invalid role: navigate to doctor profile
             navigate('/doctorinfo')
+        } else if (role != 'PATIENT') {
+            navigate('/patient-login')
         }
         // Set Loading State False
         setLoading(false)
@@ -41,7 +43,7 @@ function PatientInfo() {
 
     // Use effect to check user role on every location change
     useEffect(() => {
-        checkRole(username)
+        checkRole()
     }, [location])
 
     // Loading Page while checking user role (required to hide unwanted toast messages)
@@ -50,7 +52,7 @@ function PatientInfo() {
     return (
         <div className="w-full min-h-screen">
             <ProfileLayout signOut={signOut}>
-                <Outlet context={user}/>
+                <Outlet context={{username: username}}/>
             </ProfileLayout>
             <Toaster />
         </div>

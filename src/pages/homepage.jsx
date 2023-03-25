@@ -10,15 +10,12 @@ import './homepage.css';
 
 import PageLoading from '../components/shared/PageLoading';
 
+import Cookies from 'js-cookie'
+
 function Homepage() {
 
-    // REMOVE LATER
-    let user = {
-      username: "placeholder",
-    }
-    function signOut () {return null}
-
-    const username = user.username
+    const [username, setUsername] = useState(Cookies.get('username'))
+    const [role, setRole] = useState(Cookies.get('role'))
     const [isLoading, setLoading] = useState(false)
     const [profilePath, setProfilePath] = useState('/')
     let navigate = useNavigate()
@@ -28,14 +25,13 @@ function Homepage() {
     }
 
     // Method to check if the user is a Doctor
-    const isDoctor = async(username) => {
+    const getRole = () => {
       // Enter loading state
       setLoading(true)
-      // Request: Is user of role doctor 
-      const isDoctor = await generalRequests(requestConfig).isDoctor(username)
-      console.log('Is Doctor: ' + isDoctor)
-      // Navigate user
-      if(isDoctor) {
+      if (!role || !username) {
+        navigate('/patient-login')
+      }
+      if(role == 'DOCTOR') {
         // Set path to doctorinfo page
         setProfilePath('/doctorinfo')
       } else {
@@ -46,10 +42,17 @@ function Homepage() {
       setLoading(false)
     }
 
+    const signOut = () => {
+      Cookies.remove('username')
+      Cookies.remove('role')
+      setUsername('')
+      setRole('')
+    }
+
     // Use effect to check if the user is a doctor
     useEffect(() => {
-      isDoctor(username)
-    }, [])
+      getRole()
+    }, [username, role])
 
     if(isLoading) {
       return (
@@ -60,7 +63,7 @@ function Homepage() {
     return (
           <div className="background-image">
             <div className="content">
-              <b><h1 data-cy='homepage-header'>Welcome {user.username}</h1></b>
+              <b><h1 data-cy='homepage-header'>Welcome {username}</h1></b>
               <b>Choose an option</b>
               <div className='homepage-button-div'>
                 <button className='home-button hover:bg-priHover' onClick={visitProfile} >My Profile</button>
