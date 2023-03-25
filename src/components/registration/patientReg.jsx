@@ -34,12 +34,12 @@ function RegisterPatient ({user, userInfo}) {
         if(!userInfo) return
         setFirstname(userInfo.firstname || "")
         setLastname(userInfo.lastname || "")
-        setDateOfBirth(userInfo.dateofbirth || "")
+        setDateOfBirth(userInfo.dateOfBirth || "")
         setEmail(userInfo.email || "")
-        setPhoneNumber(userInfo.phonenumber || "")
+        setPhoneNumber(userInfo.phoneNumber || "")
         setAddress(userInfo.address || "")
-        setPostalCode(userInfo.postalcode || "")
-        setHealthCardNumber(userInfo.healthcardnumber || "")
+        setPostalCode(userInfo.postalCode || "")
+        setHealthCardNumber(userInfo.healthCardNo || "")
         console.log(userInfo)
     },[userInfo])
     
@@ -56,15 +56,15 @@ function RegisterPatient ({user, userInfo}) {
 
         if(isValidEmail && isValidPhoneNumber && isValidDate) {
             const patient = {
-                userid: username,
+                username: username,
                 firstname: firstname,
                 lastname: lastname,
-                dateofbirth: dateOfBirth,
+                dateOfBirth: dateOfBirth,
                 email: email,
-                phonenumber: phonenumber,
+                phoneNumber: phonenumber,
                 address: address,
-                postalcode: postalcode,
-                healthcardnumber: healthCardNumber
+                postalCode: postalcode,
+                healthCardNo: healthCardNumber
             }
     
             const result = await patientRequests(requestConfig).registerPatient(patient)

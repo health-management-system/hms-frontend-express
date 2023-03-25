@@ -16,7 +16,7 @@ export const generalRequests = (config: RequestConfig) => {
             };
             const params = new URLSearchParams([["recordid", recordid]]);
             await axios
-                .get(config.baseUrl + "/findarecord", { params: params })
+                .get(config.baseUrl + "patient/record", { params: params })
                 .then((res) => {
                     response.statusCode = res.status;
                     response.result = res.data;
@@ -45,21 +45,23 @@ export const generalRequests = (config: RequestConfig) => {
 };
 
 export const EmptyRecord: RecordType = {
-    subject: "",
-    doctorUsername: "",
+    _id: "",
     doctorName: "",
-    dateTime: "",
-    patientUsername: "string",
-    log: "",
+    doctorUsername: "",
+    patientUsername: "",
     clinic: "",
+    subject: "",
+    log: "",
+    date: ""
 };
 
 export type RecordType = {
-    subject: string;
-    doctorUsername: string;
+    _id: string;
     doctorName: string;
-    dateTime: string;
+    doctorUsername: string;
     patientUsername: string;
-    log: string;
     clinic: string;
+    subject: string;
+    log: string;
+    date: string;
 };

@@ -17,16 +17,17 @@ function ViewRecord() {
     let navigate = useNavigate()
 
     const patientInfo = () => {
-        let path = '/patientinfo'
-        navigate(path)
+        navigate(-1)
     }
 
     const getRecord = async() => {
         //setLoading(true)
         const id = searchParams.get("recordid")
+        console.log(id)
         if (id != null) {
             setHasRecordID(true)
-            const result = await generalRequests(requestConfig).getRecord(id||"")
+            const result = await generalRequests(requestConfig).getRecord(id)
+            console.log(result)
             if(result.statusCode === 200 && Object.keys(result.result).length > 1){
                 setRecord(result.result)
                 setDoctorUsername(result.result.doctorUsername)

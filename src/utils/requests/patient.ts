@@ -9,11 +9,11 @@ export const patientRequests = (config: RequestConfig) => {
                 message: "",
             };
             await axios
-                .post(config.baseUrl + "registerpatientinfo", body)
+                .post(config.baseUrl + "patient/register", body)
                 .then((res) => {
                     response.statusCode = res.status;
                     response.message =
-                        "Patient " + body.userid + " has been registered";
+                        "Patient " + body.username + " has been registered";
                 })
                 // .catch((err) => {
                 //     response.statusCode = err.response.status;
@@ -23,15 +23,14 @@ export const patientRequests = (config: RequestConfig) => {
         },
         getPatientInfo: async (
             username: string,
-            page: string,
-            pageSize: string,
-            lastEvaluatedKey: string = ""
+            page: string
         ) => {
-            const params = new URLSearchParams({
+            const params1 = new URLSearchParams({
+                username
+            });
+            const params2 = new URLSearchParams({
                 username,
-                page,
-                pageSize,
-                lastEvaluatedKey,
+                page
             });
 
             let response: {
@@ -44,61 +43,84 @@ export const patientRequests = (config: RequestConfig) => {
                 result: null,
             };
 
+            const info = await axios.get(config.baseUrl + "patient/patientinfo", { params: params1 })
+            const records = await axios.get(config.baseUrl + "patient/records", { params: params2 })
+            
+            response.result = {
+                patientInfo: info.data,
+                records: records.data,
+                error: ""
+            }
+            
+            return response;
+        },
+        getRecords: async (username:string, page:string) => {
+            const params = new URLSearchParams({
+                username,
+                page
+            });
+
+            let response: {
+                code: string;
+                statusCode: number;
+                result: RecordTableInfo | null;
+            } = {
+                code: "",
+                statusCode: 0,
+                result: null
+            }
+
             await axios
-                .get(config.baseUrl + "/findpatient", { params: params })
+                .get(config.baseUrl + "patient/records", { params: params })
                 .then((res) => {
                     response.statusCode = res.status;
                     response.result = res.data;
-                })
-                // .catch((err) => {
-                //     response.statusCode = err.response.statusCode;
-                //     response.code = err.code;
-                // });
-
+            })
             return response;
-        },
+        }
     };
 };
 
 // types for register patient
 type patientRegistrationInfo = {
-    userid: string;
+    username: string;
     email: string;
     firstname: string;
     lastname: string;
-    dateofbirth: string;
-    healthcardnumber: string;
-    phonenumber: string;
+    dateOfBirth: string;
+    healthCardNo: string;
+    phoneNumber: string;
     address: string;
-    postalcode: string;
+    postalCode: string;
 };
 
 // types for getPatientInfo
 type RecordRow = {
+    _id: string;
     doctorName: string;
+    doctorUsername: string;
+    patientUsername: string;
     clinic: string;
     subject: string;
-    dateTime: string;
-    recordid: string
+    date: string;
 };
 
 export type PatientInfo = {
+    _id: string,
     username: string;
     firstname: string;
     lastname: string;
-    dateofbirth: string;
+    dateOfBirth: string;
     email: string;
-    phonenumber: string;
+    phoneNumber: string;
     address: string;
-    postalcode: string;
-    healthcardnumber: string;
+    postalCode: string;
+    healthCardNo: string;
 };
 
 export type RecordTableInfo = {
-    total_items: number;
-    items_per_page: number;
-    current_page: number;
-    lastEvaluatedKey: string;
+    pageCount: number;
+    pageNumber: number;
     records: RecordRow[];
 };
 
