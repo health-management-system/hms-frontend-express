@@ -58,14 +58,14 @@ function Doctorinfo() {
         return [
             { label: "First Name:", value: doctorInformation.firstname },
             { label: "Last Name:", value: doctorInformation.lastname },
-            { label: "Staff ID:", value: doctorInformation.staffID },
+            { label: "Staff ID:", value: doctorInformation.staffId },
             { label: "Clinic:", value: doctorInformation.clinic },
             {
                 label: "Specialization:",
                 value: doctorInformation.specialization,
             },
             { label: "Email:", value: doctorInformation.email },
-            { label: "Phone Number:", value: doctorInformation.phonenumber },
+            { label: "Phone Number:", value: doctorInformation.phoneNumber },
         ];
     };
 
