@@ -9,6 +9,9 @@ import DoctorProfile from "./DoctorInfo/Profile";
 import DoctorRegistration from "./DoctorInfo/Registration"
 import ViewRecord from './PatientInfo/viewRecord.tsx';
 import ViewDoctor from './PatientInfo/ViewDoctor';
+import PatientLogin from "./Auth/PatientLogin";
+import PatientSignup from "./Auth/PatientSignup";
+import DoctorLogin from "./Auth/DoctorLogin";
 
 const router = createBrowserRouter([
     {
@@ -16,6 +19,18 @@ const router = createBrowserRouter([
         element: <Homepage />,
         errorElement: <ErrorPage/>,
        
+    },
+    {
+        path: "/doctor-login",
+        element: <DoctorLogin />
+    },
+    {
+        path: "/patient-login",
+        element: <PatientLogin />
+    },
+    {
+        path: "/patient-signup",
+        element: <PatientSignup />
     },
     {
         path: "/patientinfo/",

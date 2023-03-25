@@ -12,6 +12,12 @@ import PageLoading from '../components/shared/PageLoading';
 
 function Homepage() {
 
+    // REMOVE LATER
+    let user = {
+      username: "placeholder",
+    }
+    function signOut () {return null}
+
     const username = user.username
     const [isLoading, setLoading] = useState(false)
     const [profilePath, setProfilePath] = useState('/')

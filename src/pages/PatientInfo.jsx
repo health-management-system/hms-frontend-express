@@ -8,6 +8,12 @@ import toast, { Toaster } from 'react-hot-toast';
 
 function PatientInfo() {
    
+    // REMOVE LATER
+    let user = {
+        username: "placeholder",
+    }
+    function signOut () {return null}
+
     // Declarations
     const username = user.username
     const [isLoading, setLoading] = useState(false)
