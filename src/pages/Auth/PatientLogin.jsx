@@ -35,8 +35,8 @@ function PatientLogin () {
       } catch (err) {
         setLoading(false)
         console.log('Error: Something went wrong')
+        alert("provide valid credentials")
       }
-
     };
     
     useEffect(()=>{
