@@ -3,7 +3,7 @@ import {BrowserRouter as Router} from 'react-router-dom';
 import Registration from './patientReg'
 
 const user = {
-    username: "dakotawong"
+    username: "dakotawong1"
 }
 
 describe('Tests for Patient Registration Component', () => {
@@ -91,8 +91,8 @@ describe('Tests for Patient Registration Component', () => {
         cy.get('#healthCardNumber').type('9459834298j')
 
         // Submit data
-        cy.intercept('https://j4mbz2k3ad.execute-api.us-east-1.amazonaws.com/latest/registerpatientinfo').as('req')
+        cy.intercept('http://localhost:4000/patient/register').as('req')
         cy.get('#submit-button').click()
-        cy.wait('@req', {responseTimeout: 10000, requestTimeout:10000}).its('response.statusCode').should('eq', 201)
+        cy.wait('@req', {responseTimeout: 10000, requestTimeout:10000}).its('response.statusCode').should('eq', 200)
     })
 })

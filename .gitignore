@@ -4,6 +4,7 @@
 # Cypress stuff
 /.nyc_output
 /cypress/videos
+cypress/screenshots/
 
 
 # dependencies

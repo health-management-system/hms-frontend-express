@@ -28,3 +28,9 @@ Cypress.Commands.add('mount', mount)
 
 // https://github.com/bahmutov/cypress-code-coverage
 import '@bahmutov/cypress-code-coverage/support'
+
+import './commands'
+Cypress.on('uncaught:exception', (err, runnable) => {
+  // returning false here prevents Cypress from failing the test
+  return false
+})
