@@ -13,15 +13,11 @@ type PatientHistoryTableProps = {
     history?: PatientRecords;
     isLoadingHistory?: boolean;
     errorLoadingHistory?: boolean;
+    onClickRow?: (id:string)=>void;
     refreshHandler?: (...event: any) => void;
 };
 
 export const PatientHistoryTable = (props: PatientHistoryTableProps) => {
-    const navigate = useNavigate();
-
-    const navigateToSingleId = (recordId: string) => {
-        navigate("/patientinfo/viewRecord?recordid=" + recordId);
-    };
 
     return (
         <div className="bg-secCol w-full  rounded-xl overflow-x-scroll md:overflow-hidden ">
@@ -68,7 +64,7 @@ export const PatientHistoryTable = (props: PatientHistoryTableProps) => {
                         </button>
                     </div>
                 ) : // all record field
-                props.history && props.history.length > 1 ? (
+                props.history && props.history.length > 0 ? (
                     props.history?.map((record, index) => (
                         <div
                             data-cy={"PatientHistoryTable-record-field"}
@@ -80,7 +76,7 @@ export const PatientHistoryTable = (props: PatientHistoryTableProps) => {
                                     : ""
                             }`}
                             key={record.id}
-                            onClick={() => navigateToSingleId(record.id)}
+                            onClick={() => props.onClickRow && props.onClickRow(record.id)}
                         >
                             <h1 className="group-hover:underline">
                                 {record.dateTime}
