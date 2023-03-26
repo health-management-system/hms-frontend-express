@@ -1,19 +1,21 @@
 import React, { useState } from "react";
 import "./patient_record.css";
 import { RecordType } from "../../utils/requests/general";
+import { CgProfile } from "react-icons/cg"
 
 function patientRecord(props: { record: RecordType, onClickDoctor?: (...event:any[])=>void , isDoctorNameHoverable?:boolean }) {
     return (
         <div className="outer-box rounded-md">
             <div className="inner-box rounded-md">
                 <ul className="view-record-panel rounded-md">
-                    <li className={`view-record-list-item rounded-md  ${props.isDoctorNameHoverable? "cursor-pointer hover:underline":""}`}>
+                    <li className={`view-record-list-item rounded-md`}>
                         <label className="view-record-label">
                             Doctor Name:{" "}
                         </label>{" "}
-                        <span  onClick={props.onClickDoctor} className={`view-record-span `}>
+                        <span className={`view-record-span `}>
                             {props.record.doctorName}
                         </span>
+                        {props.isDoctorNameHoverable? <span className='view-doctor-button rounded-md bg-priCol hover:bg-priHover flex justify-center items-center hover:cursor-pointer mx-1' onClick={props.onClickDoctor}><CgProfile className=" mx-1"/>View Profile</span>:null}
                     </li>
                     <li className="view-record-list-item rounded-md">
                         <label className="view-record-label">Clinic: </label>{" "}

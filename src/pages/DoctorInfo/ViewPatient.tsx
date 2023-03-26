@@ -23,7 +23,8 @@ import PageLoading from "../../components/shared/PageLoading";
 
 function Profile() {
     const navigate = useNavigate();
-    const user = useOutletContext() as Record<string, any>;
+    const [searchParams] = useSearchParams();
+    const [user, setUser] = useState({username: ""})
     const [isLoadingPH, setIsLoadingPH] = useState<boolean>(true);
     const [patientInfoAndRecords, setPatientInfoAndRecords] =
         useState<PatientInfoResult | null>(null);
@@ -90,7 +91,12 @@ function Profile() {
     };
 
     useEffect(() => {
-        loadInfoInit(user.username as string);
+        const username = searchParams.get("patientUsername")
+        if(username) {
+            loadInfoInit(username as string);
+        } else {
+            navigate(-1)
+        }
     }, [currentPage]);
 
     if (isLoadingPH && patientInfoAndRecords == null) {
@@ -113,8 +119,10 @@ function Profile() {
     console.log(patientInfoAndRecords)
 
     return (
+        <>
         <div className="md:px-20 px-10 py-10">
-            <Subtitle title="General Info:" />
+            <button className="bg-priCol hover:bg-priHover text-white font-bold py-3 px-8 rounded-md my-6 block" onClick={() => navigate(-1)}>Return to Patient List</button>
+            <Subtitle title="Patient Info:" />
             <InfoPanel
                 doctorInfo={
                     (patientInfoAndRecords &&
@@ -124,7 +132,7 @@ function Profile() {
             />
             <div className="flex w-full justify-between items-center mb-5">
                 {/* Health record title */}
-                <Subtitle title="Health Records:" />
+                <Subtitle title="Patient Records:" />
                 <div className="space-x-6 flex">
                     {/* Refresh */}
                     <BiRefresh
@@ -164,10 +172,12 @@ function Profile() {
                         })) ||
                     []
                 }
+                onClickRow={(id:string) => navigate('/doctorinfo/viewrecord?recordid='+id)}
                 errorLoadingHistory={false}
-                onClickRow={(id:string) => navigate('/patientinfo/viewrecord?recordid='+id)}
             />
         </div>
+        </>
+
     );
 }
 

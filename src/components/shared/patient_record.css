@@ -31,6 +31,16 @@
     border-radius: 1em;
   }
 
+.view-doctor-button {
+  font-size: 1.2em;
+  border-width: 2px;
+  border-color: black;
+  padding-right: 0.3em;
+  color: white;
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+}
+
 .view-record-list-item {
     text-align: left;
     display: flex;

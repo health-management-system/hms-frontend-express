@@ -101,6 +101,13 @@ function DoctorNavList({ onClick }) {
                 <h3>Update Info</h3>{" "}
                 <div className="group-hover:w-full w-0 duration-100 ease-in h-[3px] bg-priCol" />
             </li>
+            <li
+                className="group cursor-pointer space-y-3"
+                onClick={navigationHandler("/viewpatients")}
+            >
+                <h3>View Patients</h3>{" "}
+                <div className="group-hover:w-full w-0 duration-100 ease-in h-[3px] bg-priCol" />
+            </li>
         </ul>
     );
 }
