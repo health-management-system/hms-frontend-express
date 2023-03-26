@@ -36,7 +36,7 @@
 }
 
 
-.child input[type="password"],input[type="text"]{
+.login-input{
    width:80%;
    border: none;
    border-bottom: 1px solid #000;
@@ -46,11 +46,6 @@
    font-size: 16px;
    margin-left: 10%;
    margin-bottom: 2%;
-}
-
-.child input{
-   width:80%;
-   margin-left: 10%;
 }
 
 .child p {

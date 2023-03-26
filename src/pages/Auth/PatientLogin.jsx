@@ -48,9 +48,9 @@ function PatientLogin () {
             <img src={require("../../assets/user_1.png")} alt="random_image" className="image"/>
                 <form onSubmit={handleSubmit} id="form_login">                
                     <p>User Name:</p>
-                    <input name="UserName" type="text" value={inputField.UserName} onChange={(event)=>setInputField({...inputField, [event.target.name]: event.target.value})} placeholder="Enter Username"/>
+                    <input className='login-input' name="UserName" type="text" value={inputField.UserName} onChange={(event)=>setInputField({...inputField, [event.target.name]: event.target.value})} placeholder="Enter Username"/>
                     <p>Password:</p>
-                    <input name="Password" type="password" value={inputField.Password} onChange={(event)=>setInputField({...inputField, [event.target.name]: event.target.value})} placeholder="Enter Passowrd"/>
+                    <input className='login-input' name="Password" type="password" value={inputField.Password} onChange={(event)=>setInputField({...inputField, [event.target.name]: event.target.value})} placeholder="Enter Passowrd"/>
                     <br></br>
                     <div>
                       <button type="submit" disabled={button_true}>{loading ? <div className='flex space-x-3 justify-center items-center'><AiOutlineLoading3Quarters className="animate-spin text-white" /><h1>Loading</h1></div>:<span>Submit</span>}</button>
