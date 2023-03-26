@@ -71,10 +71,10 @@ function PatientSignup () {
               <br></br>
               <button type="submit" disabled={button_true}>{loading ? <div className='flex space-x-3 justify-center items-center'><AiOutlineLoading3Quarters className="animate-spin text-white" /><h1>Loading</h1></div>:<span>Submit</span>}</button>
           </form>
-          <span>Have an account? <Link to="/patient-login" className="nav-item">Sign in</Link> </span>
+          <div>Have an account? <Link to="/patient-login" className="nav-item">Sign in</Link> </div>
           
          
-          <Link to="/forgotpassword" className="nav-item">Forgot password?</Link>
+          {/* <Link to="/forgotpassword" className="nav-item">Forgot password?</Link> */}
       </div>
   </div>
     );

@@ -34,15 +34,11 @@ function DoctorLogin () {
       } catch (err) {
         setLoading(false)
         console.log('Error: Something went wrong')
-        alert("provide valid credentials")
       }
     };
 
     useEffect(()=>{
-        if (inputField.UserName.length >4 && inputField.Password.length>1){
-            setButtonState(false)
-        }
-        else{setButtonState(true)}
+        setButtonState(false)
     },[inputField.UserName,inputField.Password,])
 
     return (
@@ -55,10 +51,12 @@ function DoctorLogin () {
                     <p>Password:</p>
                     <input name="Password" type="password" value={inputField.Password} onChange={(event)=>setInputField({...inputField, [event.target.name]: event.target.value})} placeholder="Enter Passowrd"/>
                     <br></br>
-                    <button type="submit" disabled={button_true}>{loading ? <div className='flex space-x-3 justify-center items-center'><AiOutlineLoading3Quarters className="animate-spin text-white" /><h1>Loading</h1></div>:<span>Submit</span>}</button>
+                    <div>
+                        <button type="submit" disabled={button_true}>{loading ? <div className='flex space-x-3 justify-center items-center'><AiOutlineLoading3Quarters className="animate-spin text-white" /><h1>Loading</h1></div>:<span>Submit</span>}</button>
+                    </div>
                 </form>
-                <span> Don't have an account? <Link to="/patient-signup" className="nav-item"> Register</Link> </span>
-            </div>
+                <div> Don't have an account? <Link to="/patient-signup" className="nav-item"> Register</Link> </div> 
+            </div>    
         </div> 
     );
 }

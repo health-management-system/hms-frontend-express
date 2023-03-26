@@ -1,70 +1,80 @@
 .parent2{
-    text-align: center;
-    justify-content: center;
-    display: flex;
-    padding: 90px 0 90px 0;
-    background-image: url('../../assets/homepage.jpg');
-    background-size:cover;
-    background-repeat:no-repeat;
-    min-height:100vh;
+   padding-bottom: 18%;
+   padding-top: 13%;
+   background-image: url('../../assets/homepage.jpg');
+   background-size:cover;
+   background-repeat:no-repeat;
+   height:100vh;
+   align-items: center;
+   vertical-align: middle;
  }
  
  .child2{
-    justify-content: center;
-    display: flex;
-    padding-bottom: 10px;
-    width: 30%;
-    box-shadow: 1px 1px 10px 1px rgb(207, 207,207);
-    padding-top: 10px;
-    border-radius: 60px;
-    background-color: white ;
-    flex-direction: column;
+   margin-left: 37%;
+   margin-right: 37%;
+   width: 26%;
+   box-shadow: 1px 1px 10px 1px rgb(207, 207,207);
+   border-radius: 60px;
+   background-color: white ;
+   flex-direction: column;
+   height: max-content;
+   padding-top: 2%;
+   padding-bottom: 2%;
  }
  
 
  .image2{
-    padding-top: 20px;
-    justify-content: center;
-    display: flex;
-    align-items: center;
-    height: 100px;
-    border-radius: 120px;
-    margin: auto;
+   justify-content: center;
+   display: flex;
+   align-items: center;
+   height: 100px;
+
+   border-radius: 120px;
+   margin: 0px auto;
  }
  
  
  .child2 input[type="password"],input[type="email"],input[type="text"]{
-    border: none;
-    border-bottom: 1px solid #000;
-    background: transparent;
-    outline: none;
-    height: 40px;
-    font-size: 16px;
+   width:80%;
+   border: none;
+   border-bottom: 1px solid #000;
+   background: transparent;
+   outline: none;
+   height: 40px;
+   font-size: 16px;
+   margin-left: 10%;
+   margin-bottom: 2%;
  }
  
  .child2 input{
- margin-left: 10px;
- width: 60%;
- margin-bottom: 8px;
+   width:80%;
+   margin-left: 10%;
  }
  
  .child2 p {
-    margin: 5px;
-    justify-content: left;
-    margin-left: 110px;
-    font-weight: bold;
-    text-align: left;
+   margin-left: 10%;
+   width:80%;
+   font-weight: bold;
+   text-align: left;
     }
  
  .child2 button[type="submit"]{
-    width:200px;
-    padding: 15px 0;
-    text-align: center;
-    margin: 20px 10px;
-    border-radius: 25px;
-    font-weight:bold;
-    color:#fff;
-    cursor: pointer;
-    background-color: #153243;
-    font-size: 16px;
+   width:40%;
+   margin-left: 30%;
+   margin-right: 30%;
+   text-align: center;
+   border-radius: 25px;
+   font-weight:bold;
+   color:#fff;
+   cursor: pointer;
+   background-color: #153243;
+   font-size: 16px;
+   margin-top: 3%;
+   margin-bottom: 2%;
+   height: 2.5em;
  }
+ .child2 div {
+   width:80%;
+   margin-left: 10%;
+   text-align: center;
+}
