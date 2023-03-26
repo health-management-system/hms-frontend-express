@@ -14,8 +14,7 @@ jobs:
         repository: health-management-system/hms-backend-express
         path: backend/
     - name: Start the Server
-      with:
-        run: |
-          cd backend
-          npm i
-          npm run dev
+      run: |
+        cd backend
+        npm i
+        npm run dev
