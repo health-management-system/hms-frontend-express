@@ -1,6 +1,4 @@
 .parent2{
-   padding-bottom: 18%;
-   padding-top: 13%;
    background-image: url('../../assets/homepage.jpg');
    background-size:cover;
    background-repeat:no-repeat;
@@ -10,9 +8,13 @@
  }
  
  .child2{
-   margin-left: 37%;
-   margin-right: 37%;
-   width: 26%;
+   width: 600px;
+   position: absolute;
+   top:0;
+   bottom: 0;
+   left: 0;
+   right: 0;
+   margin: auto;
    box-shadow: 1px 1px 10px 1px rgb(207, 207,207);
    border-radius: 60px;
    background-color: white ;
