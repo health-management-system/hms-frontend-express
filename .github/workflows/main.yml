@@ -2,12 +2,9 @@ name: Run Unit Tests
 
 on:
   workflow_dispatch:
-  pull_request:
-    branches:
-      - 'master'
   push:
     branches:
-     - 'master'
+     - 'main'
   
   
 jobs:
