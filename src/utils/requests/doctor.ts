@@ -31,6 +31,19 @@ export type DoctorInfo =  {
     phoneNumber: string
 }
 
+type AllPatientInfoList = {
+    "_id": string,
+    "firstname": string,
+    "lastname": string,
+    "username": string
+}[]
+
+type getPatientResponse = {
+    "pageCount": number,
+    "pageNumber": number,
+    "patients": AllPatientInfoList
+}
+
 export const doctorRequests = (config:RequestConfig) => {
     return {
         getDoctorInfo: async (username:string) => {
@@ -74,6 +87,23 @@ export const doctorRequests = (config:RequestConfig) => {
                 response.message = 'Something has gone wrong'
             })
             return response
+        },
+
+        getPatients: async(page:string) =>{
+
+            const params = new URLSearchParams({page});
+
+            let response: {statusCode: number, result:getPatientResponse|null|undefined} = {statusCode:0, result:null}
+
+            await axios.get(config.baseUrl+ "doctor/getpatients", { params: params }).then(res=>{
+                response.statusCode = res.status;
+                response.result = res.data
+            }).catch((err) =>{
+                response.statusCode = 500
+                response.result = undefined
+            })
+
+            return response;
         }
     }
 }

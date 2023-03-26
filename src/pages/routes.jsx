@@ -7,11 +7,15 @@ import PatientProfile from "./PatientInfo/Profile";
 import PatientRegistration from "./PatientInfo/Registration";
 import DoctorProfile from "./DoctorInfo/Profile";
 import DoctorRegistration from "./DoctorInfo/Registration"
-import ViewRecord from './PatientInfo/viewRecord.tsx';
-import ViewDoctor from './PatientInfo/ViewDoctor';
+import ViewRecordPatient from './PatientInfo/viewRecord.tsx';
+import ViewDoctorPatient from './PatientInfo/ViewDoctor';
 import PatientLogin from "./Auth/PatientLogin";
 import PatientSignup from "./Auth/PatientSignup";
 import DoctorLogin from "./Auth/DoctorLogin";
+import ViewPatients from "./DoctorInfo/ViewPatients";
+import ViewPatient from "./DoctorInfo/ViewPatient";
+import ViewRecordDoctor from "./DoctorInfo/viewRecord"
+import ViewDoctorDoctor from "./DoctorInfo/ViewDoctor"
 
 const router = createBrowserRouter([
     {
@@ -43,10 +47,10 @@ const router = createBrowserRouter([
             element: <PatientRegistration />
         }, {
             path: "viewrecord/",
-            element: <ViewRecord />
+            element: <ViewRecordPatient />
         },{
             path: "viewdoctor/",
-            element:<ViewDoctor/>
+            element:<ViewDoctorPatient/>
         }]
     },
     {
@@ -58,6 +62,18 @@ const router = createBrowserRouter([
         }, {
             path: "update/",
             element: <DoctorRegistration />
+        },{
+            path: "viewpatients/",
+            element: <ViewPatients />,
+        },{
+            path: "viewpatient/",
+            element: <ViewPatient />
+        },{
+            path: "viewrecord/",
+            element: <ViewRecordDoctor />
+        },{
+            path: "viewdoctor/",
+            element: <ViewDoctorDoctor />
         }]
     }
     
