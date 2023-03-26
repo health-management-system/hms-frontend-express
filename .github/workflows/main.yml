@@ -1,20 +1,25 @@
-name: Run Tests
+name: Run Unit Tests
 
 on:
-  workflow_dispatch
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - 'master'
+  push:
+    branches:
+     - 'master'
+  
   
 jobs:
-  test:
+  cypress-run:
     runs-on: ubuntu-latest
-    
     steps:
-    - name: Clone Backend Repo
+    - name: Checkout Default Branch
       uses: actions/checkout@v2
+    - name: Cypress.io
+      uses: cypress-io/github-action@v5.0.7
       with:
-        repository: health-management-system/hms-backend-express
-        path: backend/
-    - name: Start the Server
-      run: |
-        cd backend
-        npm i
-        npm run dev
+        start: npm start
+        browser: chrome
+        component: true
+        auto-cancel-after-failures: 1
