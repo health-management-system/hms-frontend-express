@@ -55,7 +55,7 @@ function DoctorLogin () {
                         <button type="submit" disabled={button_true}>{loading ? <div className='flex space-x-3 justify-center items-center'><AiOutlineLoading3Quarters className="animate-spin text-white" /><h1>Loading</h1></div>:<span>Submit</span>}</button>
                     </div>
                 </form>
-                <div> Don't have an account? <Link to="/patient-signup" className="nav-item"> Register</Link> </div> 
+                <div> Don't have an account? <Link to="/patient-signup" className="nav-item hover:cursor-pointer hover:text-sky-700 hover:font-bold"> Register</Link> </div> 
             </div>    
         </div> 
     );
