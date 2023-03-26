@@ -1,31 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import axios from 'axios'
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Link } from "react-router-dom";
+import "./login.css";
+import {AiOutlineLoading3Quarters} from "react-icons/ai"
 
 function PatientLogin () {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const[inputField,setInputField]=useState({UserName:"",Password:""})
+    const[button_true,setButtonState]=useState(true)
+    const [loading, setLoading] = useState(false)
     const navigate = useNavigate();
     
-    const handleUsernameChange = (e) => {
-        setUsername(e.target.value);
-    };
-    
-    const handlePasswordChange = (e) => {
-      setPassword(e.target.value);
-    };
-    
-    const handleSubmit = async(e) => {
-      e.preventDefault();
+    const handleSubmit = async(event) => {
+      setLoading(true)
+      event.preventDefault();
       // Add logic to handle login submission
-      console.log('Username: ' + username)
-      console.log('Password: ' + password)
+      console.log('Username: ' + inputField.UserName)
+      console.log('Password: ' + inputField.Password)
 
       // Hit the end point login endpoint
       try {
         const res = await axios.post('http://localhost:4000/auth/login-patient', {
-            username: username,
-            password: password
+            username: inputField.UserName,
+            password: inputField.Password
         },
         {
             withCredentials: true
@@ -33,37 +29,39 @@ function PatientLogin () {
         console.log('Login Status: ' + res.statusText)
         console.log(res)
         console.log(document.cookie)
+        setLoading(false)
+        setInputField({UserName:"",Password:""})
         navigate("/")
       } catch (err) {
+        setLoading(false)
         console.log('Error: Something went wrong')
       }
 
     };
     
+    useEffect(()=>{
+        if (inputField.UserName.length >4 && inputField.Password.length>1){
+            setButtonState(false)
+        }
+        else{setButtonState(true)}
+    },[inputField.UserName,inputField.Password,])
+
     return (
-      <>
-          <form onSubmit={handleSubmit} className=' bg-secCol'>
-            <h2>Patient Login</h2>
-            <div>
-              <label htmlFor="email">Username:</label>
-              <input
-                id="username"
-                value={username}
-                onChange={handleUsernameChange}
-              />
-            </div>
-            <div>
-              <label htmlFor="password">Password:</label>
-              <input
-                type="password"
-                id="password"
-                value={password}
-                onChange={handlePasswordChange}
-              />
-            </div>
-            <button type="submit">Login</button>
-          </form>
-      </>
+      <div className="parent">
+          <div className="child">
+            <img src={require("../../assets/user_1.png")} alt="random_image" className="image"/>
+                <form onSubmit={handleSubmit} id="form_login">                
+                    <p>User Name:</p>
+                    <input name="UserName" type="text" value={inputField.UserName} onChange={(event)=>setInputField({...inputField, [event.target.name]: event.target.value})} placeholder="Enter Username"/>
+                    <p>Password:</p>
+                    <input name="Password" type="password" value={inputField.Password} onChange={(event)=>setInputField({...inputField, [event.target.name]: event.target.value})} placeholder="Enter Passowrd"/>
+                    <br></br>
+                    <button type="submit" disabled={button_true}>{loading ? <div className='flex space-x-3 justify-center items-center'><AiOutlineLoading3Quarters className="animate-spin text-white" /><h1>Loading</h1></div>:<span>Submit</span>}</button>
+                </form>
+                <span> Don't have an account? <Link to="/patient-signup" className="nav-item"> Register</Link> </span>
+          </div>
+      </div>    
+    
     );
 }
 

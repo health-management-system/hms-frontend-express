@@ -1,0 +1,74 @@
+.parent{
+   text-align: center;
+   justify-content: center;
+   display: flex;
+   padding: 90px 0 90px 0;
+   background-image: url('../../assets/homepage.jpg');
+   background-size:cover;
+   background-repeat:no-repeat;
+   min-height:100vh;
+   align-items: center;
+}
+
+.child{
+   justify-content: center;
+   display: flex;
+   padding-bottom: 10px;
+   width: 30%;
+   box-shadow: 1px 1px 10px 1px rgb(207, 207,207);
+   padding-top: 30px;
+   border-radius: 60px;
+   background-color: white ;
+   flex-direction: column;
+   height: max-content;
+   
+}
+
+.image{
+   padding-top: 20px;
+   justify-content: center;
+   display: flex;
+   align-items: center;
+   height: 100px;
+
+   border-radius: 120px;
+   margin: 0px auto;
+}
+
+
+.child input[type="password"],input[type="text"]{
+
+   border: none;
+   border-bottom: 1px solid #000;
+   background: transparent;
+   outline: none;
+   height: 40px;
+   font-size: 16px;
+}
+
+.child input{
+width: 60%;
+margin-bottom: 20px;
+}
+
+.child p {
+   margin: 8px;
+   padding: 0px 80px;
+   font-weight: bold;
+   text-align: left;
+   }
+
+.child button[type="submit"]{
+   width:200px;
+   padding: 15px 0;
+   text-align: center;
+   margin: 20px 10px;
+   border-radius: 25px;
+   font-weight:bold;
+   color:#fff;
+   cursor: pointer;
+   background-color: #153243;
+   font-size: 16px;
+}
+
+

@@ -1,0 +1,70 @@
+.parent2{
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    padding: 90px 0 90px 0;
+    background-image: url('../../assets/homepage.jpg');
+    background-size:cover;
+    background-repeat:no-repeat;
+    min-height:100vh;
+ }
+ 
+ .child2{
+    justify-content: center;
+    display: flex;
+    padding-bottom: 10px;
+    width: 30%;
+    box-shadow: 1px 1px 10px 1px rgb(207, 207,207);
+    padding-top: 10px;
+    border-radius: 60px;
+    background-color: white ;
+    flex-direction: column;
+ }
+ 
+
+ .image2{
+    padding-top: 20px;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    height: 100px;
+    border-radius: 120px;
+    margin: auto;
+ }
+ 
+ 
+ .child2 input[type="password"],input[type="email"],input[type="text"]{
+    border: none;
+    border-bottom: 1px solid #000;
+    background: transparent;
+    outline: none;
+    height: 40px;
+    font-size: 16px;
+ }
+ 
+ .child2 input{
+ margin-left: 10px;
+ width: 60%;
+ margin-bottom: 8px;
+ }
+ 
+ .child2 p {
+    margin: 5px;
+    justify-content: left;
+    margin-left: 110px;
+    font-weight: bold;
+    text-align: left;
+    }
+ 
+ .child2 button[type="submit"]{
+    width:200px;
+    padding: 15px 0;
+    text-align: center;
+    margin: 20px 10px;
+    border-radius: 25px;
+    font-weight:bold;
+    color:#fff;
+    cursor: pointer;
+    background-color: #153243;
+    font-size: 16px;
+ }
