@@ -1,0 +1,77 @@
+.parent2{
+   background-image: url('../../assets/homepage.jpg');
+   background-size:cover;
+   background-repeat:no-repeat;
+   min-height:100vh;
+   align-items: center;
+   vertical-align: middle;
+ }
+ 
+ .child2{
+   width: 600px;
+   position: absolute;
+   top:0;
+   bottom: 0;
+   left: 0;
+   right: 0;
+   margin: auto;
+   box-shadow: 1px 1px 10px 1px rgb(207, 207,207);
+   border-radius: 60px;
+   background-color: white ;
+   flex-direction: column;
+   height: max-content;
+   padding-top: 2%;
+   padding-bottom: 2%;
+ }
+ 
+
+ .image2{
+   justify-content: center;
+   display: flex;
+   align-items: center;
+   height: 100px;
+
+   border-radius: 120px;
+   margin: 0px auto;
+ }
+ 
+ 
+ .inputclass{
+   width:80%;
+   border: none;
+   border-bottom: 1px solid #000;
+   background: transparent;
+   outline: none;
+   height: 40px;
+   font-size: 16px;
+   margin-left: 10%;
+   margin-bottom: 2%;
+ }
+ 
+ .child2 p {
+   margin-left: 10%;
+   width:80%;
+   font-weight: bold;
+   text-align: left;
+    }
+ 
+ .child2 button{
+   width:40%;
+   margin-left: 30%;
+   margin-right: 30%;
+   text-align: center;
+   border-radius: 25px;
+   font-weight:bold;
+   color:#fff;
+   cursor: pointer;
+   background-color: #153243;
+   font-size: 16px;
+   margin-top: 3%;
+   margin-bottom: 2%;
+   height: 2.5em;
+ }
+ .child2 div {
+   width:80%;
+   margin-left: 10%;
+   text-align: center;
+}
