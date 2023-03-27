@@ -63,7 +63,7 @@ function RegisterDoctor ({user, userInfo}) {
             const result = await doctorRequests(requestConfig).registerDoctor(doctor)
             console.log(result)
 
-            if(result.statusCode == 201) {
+            if(result.statusCode < 300) {
                 toast('Info Updated!', {
                     id: "Hello",
                     duration: 5000,

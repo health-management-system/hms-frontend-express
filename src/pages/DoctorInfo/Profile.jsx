@@ -36,23 +36,23 @@ function Doctorinfo() {
         return <PageLoading />;
     }
 
-    if (
-        typeof doctorInfo === "object" &&
-        Object.keys(doctorInfo).length === 0
-    ) {
-        // https://emojipedia.org/symbols/
-        toast("Please add your information", {
-            id: "Hello",
-            duration: 10000,
-            icon: "📣",
-            style: {
-                width: "1200em",
-                height: "3em",
-                fontSize: "1.2em",
-            },
-        });
-        navigate("/doctorinfo/update");
-    }
+    // if (
+    //     typeof doctorInfo === "object" &&
+    //     Object.keys(doctorInfo).length === 0
+    // ) {
+    //     // https://emojipedia.org/symbols/
+    //     toast("Please add your information", {
+    //         id: "Hello",
+    //         duration: 10000,
+    //         icon: "📣",
+    //         style: {
+    //             width: "1200em",
+    //             height: "3em",
+    //             fontSize: "1.2em",
+    //         },
+    //     });
+    //     navigate("/doctorinfo/update");
+    // }
 
     const doctorMap = (doctorInformation) => {
         return [

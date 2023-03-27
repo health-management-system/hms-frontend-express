@@ -70,7 +70,7 @@ function RegisterPatient ({user, userInfo}) {
             const result = await patientRequests(requestConfig).registerPatient(patient)
             console.log(result)
     
-            if(result.statusCode == 201) {
+            if(result.statusCode < 300) {
                 toast('Info Updated!', {
                     id: "Hello",
                     duration: 5000,
@@ -87,7 +87,7 @@ function RegisterPatient ({user, userInfo}) {
         } else {
             let toastMessage = 'Invalid: '
             if(!isValidDate) {
-                toastMessage += '\'Date of Birth\' '
+                //toastMessage += '\'Date of Birth\' '
             } else if(!isValidEmail) {
                 toastMessage += '\'Email\' '
             } else if(!isValidPhoneNumber) {

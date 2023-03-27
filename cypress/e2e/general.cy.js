@@ -1,6 +1,10 @@
-const user = {
+const patient = {
   username: "dakotawong1",
   password: "1234"
+}
+const doctor = {
+  username: "anjy",
+  password: "hello123"
 }
 
 describe('General User Tests',()=>{
@@ -23,8 +27,8 @@ describe('General User Tests',()=>{
 
     // Login with test user credentials
     cy.intercept('*').as('res')
-    cy.get('[name="UserName"]').type(user.username)
-    cy.get('[name="Password"]').type(user.password)
+    cy.get('[name="UserName"]').type(patient.username)
+    cy.get('[name="Password"]').type(patient.password)
     cy.get('button').click()
       .wait('@res', {responseTimeout: 10000, requestTimeout:10000})
 
@@ -40,14 +44,14 @@ describe('General User Tests',()=>{
     // Check that we have returned home
     cy.get('.homepage-button-div > :nth-child(1)').should('be.visible')
   })
-  it("view record with invalid id",()=>{
+  it("view record with invalid id (Patient)",()=>{
     // Visit site address
     cy.visit('/patient-login')
 
     // Login with test user credentials
     cy.intercept('*').as('res')
-    cy.get('[name="UserName"]').type(user.username)
-    cy.get('[name="Password"]').type(user.password)
+    cy.get('[name="UserName"]').type(patient.username)
+    cy.get('[name="Password"]').type(patient.password)
     cy.get('button').click()
       .wait('@res', {responseTimeout: 10000, requestTimeout:10000})
 
@@ -63,5 +67,27 @@ describe('General User Tests',()=>{
     // Check that we have returned home
     cy.get('.homepage-button-div > :nth-child(1)').should('be.visible')
   })
+  it("view record with invalid id (Doctor)",()=>{
+    // Visit site address
+    cy.visit('/doctor-login')
 
+    // Login with test user credentials
+    cy.intercept('*').as('res')
+    cy.get('[name="UserName"]').type(doctor.username)
+    cy.get('[name="Password"]').type(doctor.password)
+    cy.get('button').click()
+      .wait('@res', {responseTimeout: 10000, requestTimeout:10000})
+
+    // Enter homepage
+    cy.get('.homepage-button-div > :nth-child(1)').should('be.visible')
+    
+    // Check for page not found header
+    cy.visit('/doctorinfo/viewrecord')
+
+    // Click on go back button
+    cy.get('.error-page-button').click()
+
+    // Check that we have returned home
+    cy.get('.homepage-button-div > :nth-child(1)').should('be.visible')
+  })
 })

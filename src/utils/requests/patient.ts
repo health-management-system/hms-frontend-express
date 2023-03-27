@@ -15,10 +15,10 @@ export const patientRequests = (config: RequestConfig) => {
                     response.message =
                         "Patient " + body.username + " has been registered";
                 })
-                // .catch((err) => {
-                //     response.statusCode = err.response.status;
-                //     response.message = "Something has gone wrong";
-                // });
+                .catch((err) => {
+                    response.statusCode = err.response.status;
+                    response.message = "Something has gone wrong";
+                });
             return response;
         },
         getPatientInfo: async (
@@ -54,30 +54,30 @@ export const patientRequests = (config: RequestConfig) => {
             
             return response;
         },
-        getRecords: async (username:string, page:string) => {
-            const params = new URLSearchParams({
-                username,
-                page
-            });
+        // getRecords: async (username:string, page:string) => {
+        //     const params = new URLSearchParams({
+        //         username,
+        //         page
+        //     });
 
-            let response: {
-                code: string;
-                statusCode: number;
-                result: RecordTableInfo | null;
-            } = {
-                code: "",
-                statusCode: 0,
-                result: null
-            }
+        //     let response: {
+        //         code: string;
+        //         statusCode: number;
+        //         result: RecordTableInfo | null;
+        //     } = {
+        //         code: "",
+        //         statusCode: 0,
+        //         result: null
+        //     }
 
-            await axios
-                .get(config.baseUrl + "patient/records", { params: params })
-                .then((res) => {
-                    response.statusCode = res.status;
-                    response.result = res.data;
-            })
-            return response;
-        }
+        //     await axios
+        //         .get(config.baseUrl + "patient/records", { params: params })
+        //         .then((res) => {
+        //             response.statusCode = res.status;
+        //             response.result = res.data;
+        //     })
+        //     return response;
+        // }
     };
 };
 

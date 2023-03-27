@@ -46,18 +46,18 @@ function Profile() {
             setLastPage(result.result.records.pageCount);
             setCurrentPage(result.result.records.pageNumber);
         } else {
-            // https://emojipedia.org/symbols/
-            toast("Please add your information", {
-                id: "Hello",
-                duration: 10000,
-                icon: "📣",
-                style: {
-                    width: "1200em",
-                    height: "3em",
-                    fontSize: "1.2em",
-                },
-            });
-            navigate("/patientinfo/update");
+            // // https://emojipedia.org/symbols/
+            // toast("Please add your information", {
+            //     id: "Hello",
+            //     duration: 10000,
+            //     icon: "📣",
+            //     style: {
+            //         width: "1200em",
+            //         height: "3em",
+            //         fontSize: "1.2em",
+            //     },
+            // });
+            // navigate("/patientinfo/update");
         }
 
         setIsLoadingPH(false);
@@ -85,18 +85,22 @@ function Profile() {
             if (currentPage != 1) {
                 setCurrentPage(1);
             } else {
-                loadInfoInit(user.username as string);
+                triggerReload()
             }
         }
     };
 
-    useEffect(() => {
+    const triggerReload = () => {
         const username = searchParams.get("patientUsername")
         if(username) {
             loadInfoInit(username as string);
         } else {
             navigate(-1)
         }
+    }
+
+    useEffect(() => {
+        triggerReload()
     }, [currentPage]);
 
     if (isLoadingPH && patientInfoAndRecords == null) {

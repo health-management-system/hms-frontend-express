@@ -16,10 +16,10 @@ function RegistrationPage() {
     if(user) {
 
       let results = await doctorRequests(requestConfig).getDoctorInfo(username)
-      if (typeof(results.result) === "object" && Object.keys(results.result).length < 2){
-        setIsLoading(false)
-        return
-      }
+      // if (typeof(results.result) === "object" && Object.keys(results.result).length < 2){
+      //   setIsLoading(false)
+      //   return
+      // }
       setUserInfo(results.result || {})
     }
     setIsLoading(false)

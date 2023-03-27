@@ -54,11 +54,11 @@ function Homepage() {
       getRole()
     }, [username, role])
 
-    if(isLoading) {
-      return (
-        <PageLoading />
-      )
-    }
+    // if(isLoading) {
+    //   return (
+    //     <PageLoading />
+    //   )
+    // }
 
     return (
           <div className="background-image">
