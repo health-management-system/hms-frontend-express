@@ -111,7 +111,7 @@ function Profile() {
         return [
             { label: "First Name:", value: patientInfo.firstname },
             { label: "Last Name:", value: patientInfo.lastname },
-            { label: "Date of Birth:", value: patientInfo.dateOfBirth },
+            { label: "Date of Birth:", value: new Intl.DateTimeFormat("en-US", {dateStyle: "full" }).format(new Date(patientInfo.dateOfBirth)) },
             { label: "Email:", value: patientInfo.email },
             { label: "Address:", value: patientInfo.address },
             { label: "Phone Number:", value: patientInfo.phoneNumber },
@@ -167,7 +167,7 @@ function Profile() {
                         patientInfoAndRecords.records &&
                         patientInfoAndRecords?.records.records.map((record) => {
                             return {
-                                dateTime: record.date,
+                                dateTime: new Intl.DateTimeFormat("en-US", {dateStyle: "short", timeStyle:"short" }).format(new Date(record.date)),
                                 clinic: record.clinic,
                                 subject: record.subject,
                                 doctor: record.doctorName,
