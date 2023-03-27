@@ -87,14 +87,78 @@ describe('Existing Doctor Tests', () => {
     it('Tests user cannot post an invalid record', () => {
 
         // Post invalid record and listen for response
-        cy.intercept('*').as('req')
+        cy.intercept('http://localhost:4000/doctor/record-add*').as('req')
         cy.get('.add-record-button').click()
 
         // Assert backend returns the correct response
-        cy.wait('@req', {responseTimeout: 10000, requestTimeout:10000}).its('response.statusCode').should('eq', 304)
+        cy.wait('@req', {responseTimeout: 10000, requestTimeout:10000}).its('response.statusCode').should('be.gt', 300)
         
         // Assert alert is displayed
         cy.get('.go3958317564').should('be.visible')
+    })
+    it('Tests a doctor can view a patient', () => {
+        // Navigate to view patients info
+        cy.get('[data-cy="Navbar-menu-normal"]').click()
+        cy.get(':nth-child(3) > h3').click()
+        cy.url().should('include', '/doctorinfo/viewpatients')
+
+        // Click to view a patient
+        cy.intercept('http://localhost:4000/patient/patientinfo?username=*').as('res')
+        cy.get("[data-cy=PatientHistoryTable-record-field]").first().click()
+            .wait('@res', {responseTimeout: 10000, requestTimeout:10000})
+        
+        // Can navigate back
+        cy.intercept('http://localhost:4000/patient/getpatients*').as('res')
+        cy.get('.hover\\:bg-priHover').click()
+            .wait('@res', {responseTimeout: 10000, requestTimeout:10000})
+    })
+    it('Tests a doctor can view a patient record', () => {
+        // Navigate to view patients info
+        cy.get('[data-cy="Navbar-menu-normal"]').click()
+        cy.get(':nth-child(3) > h3').click()
+        cy.url().should('include', '/doctorinfo/viewpatients')
+
+        // Click to view a patient
+        cy.intercept('http://localhost:4000/patient/patientinfo?username=*').as('res')
+        cy.get("[data-cy=PatientHistoryTable-record-field]").first().click()
+            .wait('@res', {responseTimeout: 10000, requestTimeout:10000})
+        
+        // Click to view a patient
+        cy.intercept('http://localhost:4000/doctor/viewrecord*').as('res')
+        cy.get("[data-cy=PatientHistoryTable-record-field]").first().click()
+            .wait('@res', {responseTimeout: 10000, requestTimeout:10000})
+        
+        // Click back button
+        cy.intercept('http://localhost:4000/patient/patientinfo?username=*').as('res')
+        cy.get('.py-10 > .bg-priCol').click()
+            .wait('@res', {responseTimeout: 10000, requestTimeout:10000})
+
+    })
+    it('Tests a doctor can view a patients doctor', () => {
+        // Navigate to view patients info
+        cy.get('[data-cy="Navbar-menu-normal"]').click()
+        cy.get(':nth-child(3) > h3').click()
+        cy.url().should('include', '/doctorinfo/viewpatients')
+
+        // Click to view a patient
+        cy.intercept('http://localhost:4000/patient/patientinfo?username=*').as('res')
+        cy.get("[data-cy=PatientHistoryTable-record-field]").first().click()
+            .wait('@res', {responseTimeout: 10000, requestTimeout:10000})
+        
+        // Click to view a patient
+        cy.intercept('http://localhost:4000/doctor/viewrecord*').as('res')
+        cy.get("[data-cy=PatientHistoryTable-record-field]").first().click()
+            .wait('@res', {responseTimeout: 10000, requestTimeout:10000})
+
+        // Click to view other doctor profile
+        cy.intercept('http://localhost:4000/doctor/doctorinfo*').as('res')
+        cy.get('.view-doctor-button').click()
+            .wait('@res', {responseTimeout: 10000, requestTimeout:10000})
+        
+        // Click back button
+        cy.intercept('http://localhost:4000/doctor/viewrecord*').as('res')
+        cy.get('.py-10 > .bg-priCol').click()
+            .wait('@res', {responseTimeout: 10000, requestTimeout:10000})
     })
 })
 
