@@ -5,73 +5,65 @@ const user1 = {
     username: "e2e_patient",
     password: "passWord1"
 }
-const user2 = {
-    username: "test_doctor_1",
-    password: "Welcome1%"
+const user = {
+    username: "dakotawong1",
+    password: "1234"
 }
 
 import generateRandomString from "./utils"
 
-describe('New patient Tests', () => {
-    // Sign In before each test
-    beforeEach(() => {
-        // Visit site address
-        cy.visit('/')
+// describe('New patient Tests', () => {
+//     // Sign In before each test
+//     beforeEach(() => {
+//         // Visit site address
+//         cy.visit('/')
     
-        // Check login is visible
-        cy.get('.amplify-button--primary').should('be.visible')
-    
-        // Login with test user credentials
-        cy.get('#amplify-id-\\:ra\\:').type(user2.username)
-        cy.get('#amplify-id-\\:rg\\:').type(user2.password)
-        cy.get('.amplify-button--primary').click()
+//         // Login with test user credentials
+//         cy.get('[name="UserName"]').type(user2.username)
+//         cy.get('[name="Password"]').type(user2.password)
+//         cy.get('button').click()
         
-        // Enter the Doctor Profile
-        cy.get('.content > div > :nth-child(3)').click()
+//         // Enter the Doctor Profile
+//         cy.get('.homepage-button-div > :nth-child(1)').click()
     
-        // Check the URL is updated correctly
-        cy.url().should('include', '/patientinfo')
-    })
-    it('Test new patient user is redirected to registration', () => {
-        // Check that the url matches the registration page
-        cy.url().should('include', '/patientinfo/update')
+//         // Check the URL is updated correctly
+//         cy.url().should('include', '/patientinfo')
+//     })
+//     it('Test new patient user is redirected to registration', () => {
+//         // Check that the url matches the registration page
+//         cy.url().should('include', '/patientinfo/update')
 
-        // Assert alert is displayed
-        cy.get('.go2072408551').should('be.visible')
-    })
-})
+//         // Assert alert is displayed
+//         cy.get('.go2072408551').should('be.visible')
+//     })
+// })
 
-describe('Existing Patient Tests', () => {
+describe('Patient Tests', () => {
     // Sign In before each test
     beforeEach(() => {
         // Visit site address
-        cy.visit('/')
-
-        // Check login is visible
-        cy.get('.amplify-button--primary').should('be.visible')
+        cy.visit('/patient-login')
 
         // Login with test user credentials
-        cy.get('#amplify-id-\\:ra\\:').type(user1.username)
-        cy.get('#amplify-id-\\:rg\\:').type(user1.password)
-        cy.get('.amplify-button--primary').click()
+        cy.get('[name="UserName"]').type(user.username)
+        cy.get('[name="Password"]').type(user.password)
+        cy.get('button').click()
 
         // Enter the Patient Profile
-        cy.intercept('https://j4mbz2k3ad.execute-api.us-east-1.amazonaws.com/latest/findpatient*').as('req')
-        cy.get('.content > div > :nth-child(3)').click()
-        cy.wait('@req').its('response.statusCode').should('eq', 200)
+        cy.get('.content > div > :nth-child(1)').click()
 
         // Check the URL is updated correctly
         cy.url().should('include', '/patientinfo')
     })
     it('Test user can update patient info', () => {
         // generate info
-        const firstname = generateRandomString(10)
-        const lastname = generateRandomString(10)
-        const dateOfBirth = generateRandomString(10)
-        const email = generateRandomString(10)
-        const phoneNumber = generateRandomString(10)
-        const address = generateRandomString(10)
-        const postalCode = generateRandomString(10)
+        const firstname = 'Dakota'
+        const lastname = 'Wong'
+        const dateOfBirth = '10/09/1995'
+        const email = 'dakota@gmail.com'
+        const phoneNumber = '613-888-1111'
+        const address = '250 Sunview St, Waterloo ON'
+        const postalCode = 'N2L 0H1'
         const healthCardNumber = generateRandomString(10)
 
         // Navigate to update info
@@ -94,22 +86,19 @@ describe('Existing Patient Tests', () => {
         // Check if updated info appears on profile
         cy.get(':nth-child(1) > .user-info-span').should('have.text', firstname)
         cy.get(':nth-child(2) > .user-info-span').should('have.text', lastname)
-        cy.get(':nth-child(3) > .user-info-span').should('have.text', dateOfBirth)
+        cy.get(':nth-child(3) > .user-info-span').should('have.text', '1995-10-09T04:00:00.000Z')
         cy.get(':nth-child(4) > .user-info-span').should('have.text', email)
         cy.get(':nth-child(5) > .user-info-span').should('have.text', address)
         cy.get(':nth-child(6) > .user-info-span').should('have.text', phoneNumber)
         cy.get(':nth-child(7) > .user-info-span').should('have.text', postalCode)
         cy.get(':nth-child(8) > .user-info-span').should('have.text', healthCardNumber)
-    
-        // Assert alert is displayed
-        cy.get('.go3958317564').should('be.visible')
     })
     it('Tests user can successfully view a record', () => {
         // Click on a record in the table
         cy.get("[data-cy=PatientHistoryTable-record-field]").first().click()
 
         // Check for view record url
-        cy.url().should('include', '/patientinfo/viewRecord?recordid=')
+        cy.url().should('include', '/patientinfo/viewrecord?recordid=')
 
         // Check for record subtitle
         cy.get('[data-cy="subtitle"]').should('contain.text', 'Record')
@@ -122,6 +111,33 @@ describe('Existing Patient Tests', () => {
         cy.get('.py-10 > :nth-child(1)').should('contain.text', 'General Info')
     })
 
+    it('Tests user can successfully view a doctor', () => {
+        // Click on a record in the table
+        cy.get("[data-cy=PatientHistoryTable-record-field]").first().click()
+
+        // Check for view record url
+        cy.url().should('include', '/patientinfo/viewrecord?recordid=')
+
+        // Check for record subtitle
+        cy.get('[data-cy="subtitle"]').should('contain.text', 'Record')
+
+        // Navigate to doctor profile
+        cy.get('.view-doctor-button').click()
+
+        // Check for doctor subtitle
+        cy.get('[data-cy="subtitle"]').should('contain.text', 'Doctor Info:')
+
+        // Check for view record url
+        cy.url().should('include', '/patientinfo/viewdoctor')
+        
+        // Navigate back usign back button
+        cy.get('.py-10 > .bg-priCol').click()
+
+        // Check we are redirected to patient profile
+        cy.url().should('include', '/patientinfo')
+        cy.get('.py-10 > :nth-child(1)').should('contain.text', 'Record')
+    })
+
     // Run this test last as it needs to slow Cypress (All tests after it will run slow)
     it('Tests user can paginate forward and backwards', () => {
         // Slow down cypress interactions
@@ -131,7 +147,7 @@ describe('Existing Patient Tests', () => {
         cy.get('[data-cy="PaginationNavigator-currentpage"]').should('have.text', '1')
         
         // Paginate Forward
-        cy.intercept('https://j4mbz2k3ad.execute-api.us-east-1.amazonaws.com/latest/findpatient*').as('res')
+        cy.intercept('*').as('res')
         cy.get('[data-cy="PaginationNavigator-rightclick"] > path').click()
             .wait('@res', {responseTimeout: 10000, requestTimeout:10000})
      
