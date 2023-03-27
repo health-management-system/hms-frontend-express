@@ -47,7 +47,7 @@ function PatientInfo() {
     }, [location])
 
     // Loading Page while checking user role (required to hide unwanted toast messages)
-    if(isLoading) { return (<PageLoading />)}
+    //if(isLoading) { return (<PageLoading />)}
 
     return (
         <div className="w-full min-h-screen">

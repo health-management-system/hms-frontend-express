@@ -26,7 +26,7 @@ describe('Tests for Doctor Registration Component', () => {
         cy.get('#staffid').type('423423')
         cy.get('#clinic').type('Waterloo Central')
         cy.get('#specialization').type('Eye Doctor')
-        cy.get('#email').type('johnd@gmail.co')
+        cy.get('#email').type('1')
         cy.get('#phoneNumber').type('516-353-3454')
 
         // Submit data
@@ -38,7 +38,7 @@ describe('Tests for Doctor Registration Component', () => {
         cy.get('#staffid').should("have.value", "423423")
         cy.get('#clinic').should("have.value", "Waterloo Central")
         cy.get('#specialization').should("have.value", "Eye Doctor")
-        cy.get('#email').should("have.value", "johnd@gmail.co")
+        cy.get('#email').should("have.value", "1")
         cy.get('#phoneNumber').should("have.value", "516-353-3454")
     })
     it('Doesn\'t clears inputs after submiting invalid phone number', () => {

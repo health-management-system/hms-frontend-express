@@ -45,18 +45,18 @@ function Profile() {
             setLastPage(result.result.records.pageCount);
             setCurrentPage(result.result.records.pageNumber);
         } else {
-            // https://emojipedia.org/symbols/
-            toast("Please add your information", {
-                id: "Hello",
-                duration: 10000,
-                icon: "📣",
-                style: {
-                    width: "1200em",
-                    height: "3em",
-                    fontSize: "1.2em",
-                },
-            });
-            navigate("/patientinfo/update");
+            // // https://emojipedia.org/symbols/
+            // toast("Please add your information", {
+            //     id: "Hello",
+            //     duration: 10000,
+            //     icon: "📣",
+            //     style: {
+            //         width: "1200em",
+            //         height: "3em",
+            //         fontSize: "1.2em",
+            //     },
+            // });
+            // navigate("/patientinfo/update");
         }
 
         setIsLoadingPH(false);

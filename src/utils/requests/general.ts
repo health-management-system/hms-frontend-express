@@ -29,18 +29,18 @@ export const generalRequests = (config: RequestConfig) => {
             return response;
         },
         // Backend 'isDoctor' Request: returns true if the user is a doctor, and false otherwise
-        isDoctor: async (username: string) => {
-            let result: {} | DoctorInfo = {}
-            const params = new URLSearchParams([['username', username]])
-            await axios.get(config.baseUrl + "finddoctor", {params}).then(res => {
-                result = res.data
-            })
-            if(Object.keys(result).length > 1) {
-                return true
-            } else {
-                return false
-            }
-        }
+        // isDoctor: async (username: string) => {
+        //     let result: {} | DoctorInfo = {}
+        //     const params = new URLSearchParams([['username', username]])
+        //     await axios.get(config.baseUrl + "finddoctor", {params}).then(res => {
+        //         result = res.data
+        //     })
+        //     if(Object.keys(result).length > 1) {
+        //         return true
+        //     } else {
+        //         return false
+        //     }
+        // }
     };
 };
 

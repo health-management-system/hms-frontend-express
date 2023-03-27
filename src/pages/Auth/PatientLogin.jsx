@@ -57,6 +57,7 @@ function PatientLogin () {
                     </div>
                 </form>
                 <div> Don't have an account? <Link to="/patient-signup" className="nav-item hover:cursor-pointer hover:text-sky-700 hover:font-bold">Register</Link> </div>
+                <div> Doctor login: <Link to="/doctor-login" className="nav-item hover:cursor-pointer hover:text-sky-700 hover:font-bold">click here</Link> </div>
           </div>
       </div>    
     

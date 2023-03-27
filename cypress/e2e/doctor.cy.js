@@ -1,3 +1,4 @@
+import { slowCypressDown } from 'cypress-slow-down'
 // E2E test using test users
 const user = {
     username: "anjy",
@@ -26,6 +27,13 @@ describe('Existing Doctor Tests', () => {
 
         // Check the URL is updated correctly
         cy.url().should('include', '/doctorinfo')
+    })
+    it('Test user can signout', () => {
+        // Signout
+        cy.get('[data-cy="Navbar-sign-out"]').click()
+
+        // Check the URL is updated correctly
+        cy.url().should('include', '/patient-login')
     })
     it('Test user can update doctor info', () => {
         // generate info
@@ -132,7 +140,16 @@ describe('Existing Doctor Tests', () => {
         cy.intercept('http://localhost:4000/patient/patientinfo?username=*').as('res')
         cy.get('.py-10 > .bg-priCol').click()
             .wait('@res', {responseTimeout: 10000, requestTimeout:10000})
+    })
+    it('Tests that view patient can handle errors', () => {
+        // Navigate to doctorinfo
+        cy.visit('/doctorinfo')
+        
+        // Navigate to view patients info
+        cy.visit('/doctorinfo/viewpatient')
 
+        // Check we got redirected back a page
+        cy.url().should('include', '/doctorinfo')
     })
     it('Tests a doctor can view a patients doctor', () => {
         // Navigate to view patients info
@@ -160,33 +177,142 @@ describe('Existing Doctor Tests', () => {
         cy.get('.py-10 > .bg-priCol').click()
             .wait('@res', {responseTimeout: 10000, requestTimeout:10000})
     })
-})
+    it('View Patients endpoint will handle invalid query string parameters', () => {
+        // Visit site address
+        cy.visit('/doctor-login')
 
-// describe('New doctor Tests', () => {
-//     // Sign In before each test
-//     beforeEach(() => {
-//         // Visit site address
-//         cy.visit('/')
-    
-//         // Check login is visible
-//         cy.get('.amplify-button--primary').should('be.visible')
-    
-//         // Login with test user credentials
-//         cy.get('#amplify-id-\\:ra\\:').type(user2.username)
-//         cy.get('#amplify-id-\\:rg\\:').type(user2.password)
-//         cy.get('.amplify-button--primary').click()
+        // Login with test user credentials
+        cy.intercept('*').as('res')
+        cy.get('[name="UserName"]').type(user.username)
+        cy.get('[name="Password"]').type(user.password)
+        cy.get('button').click()
+          .wait('@res', {responseTimeout: 10000, requestTimeout:10000})
+
+        // Enter homepage
+        cy.get('.homepage-button-div > :nth-child(1)').should('be.visible')
         
-//         // Enter the Doctor Profile
-//         cy.get('.content > div > :nth-child(2)').click()
-    
-//         // Check the URL is updated correctly
-//         cy.url().should('include', '/doctorinfo')
-//     })
-//     it('Test new doctor user is redirected to registration', () => {
-//         // Check that the url matches the registration page
-//         cy.url().should('include', '/doctorinfo/update')
+        // Check for page not found header
+        cy.intercept('GET', 'http://localhost:4000/doctor/getpatients?page=1', {statusCode: 400})
+        cy.visit('/doctorinfo/viewpatients').wait('@res', {responseTimeout: 10000, requestTimeout:10000})
 
-//         // Assert alert is displayed
-//         cy.get('.go2072408551').should('be.visible')
-//     })
-// })
+        // Check that we have returned home
+        cy.get('[data-cy="PatientHistoryTable-loading-text"]').should('be.visible')
+    })
+    it('Test Doctor can paginate through patient table', () => {
+        // Visit site address
+        cy.visit('/doctor-login')
+
+        // Login with test user credentials
+        cy.intercept('*').as('res')
+        cy.get('[name="UserName"]').type(user.username)
+        cy.get('[name="Password"]').type(user.password)
+        cy.get('button').click()
+          .wait('@res', {responseTimeout: 10000, requestTimeout:10000})
+
+        // Enter homepage
+        cy.get('.homepage-button-div > :nth-child(1)').should('be.visible')
+        
+        // Check for page not found header
+        cy.visit('/doctorinfo/viewpatients').wait('@res', {responseTimeout: 10000, requestTimeout:10000})
+
+        // Slow down cypress interactions
+        slowCypressDown(500)
+
+        // Click refresh button
+        cy.intercept('*').as('res')
+        cy.get('[data-cy="refesh-table-button"]').click()
+            .wait('@res', {responseTimeout: 10000, requestTimeout:10000})
+        
+        //Assert user starts on page 1
+        cy.get('[data-cy="PaginationNavigator-currentpage"]').should('have.text', '1')
+        
+        // Paginate Forward
+        cy.get('[data-cy="PaginationNavigator-rightclick"] > path').click()
+            .wait('@res', {responseTimeout: 10000, requestTimeout:10000})
+     
+        // Assert user is now on page 2
+        cy.get("[data-cy=PatientHistoryTable-record-field]", { timeout: 10000 }).first().should('be.visible')
+        cy.get('[data-cy="PaginationNavigator-currentpage"]', { timeout: 10000 }).should('have.text', '2')
+
+        // Go back to page 1
+        cy.get('[data-cy="PaginationNavigator-leftclick"] > path').click()
+            .wait('@res', {responseTimeout: 10000, requestTimeout:10000})
+
+
+        //Assert user goes back to page 1
+        cy.get("[data-cy=PatientHistoryTable-record-field]", { timeout: 10000 }).first().should('be.visible')
+        cy.get('[data-cy="PaginationNavigator-currentpage"]', { timeout: 10000 }).should('have.text', '1')
+
+        // Paginate Forward
+        cy.get('[data-cy="PaginationNavigator-rightclick"] > path').click()
+            .wait('@res', {responseTimeout: 10000, requestTimeout:10000})
+
+        // //Assert user goes back to page 2
+        cy.get("[data-cy=PatientHistoryTable-record-field]", { timeout: 10000 }).first().should('be.visible')
+        cy.get('[data-cy="PaginationNavigator-currentpage"]', { timeout: 10000 }).should('have.text', '2')
+
+        // Click refresh button
+        cy.get('[data-cy="refesh-table-button"]').click()
+            .wait('@res', {responseTimeout: 10000, requestTimeout:10000})
+
+        // //Assert user starts on page 1
+        cy.get("[data-cy=PatientHistoryTable-record-field]", { timeout: 10000 }).first().should('be.visible')
+        //cy.get('[data-cy="PaginationNavigator-currentpage"]', { timeout: 10000 }).should('have.text', '1')
+
+        // Return cypress interactions to regular speed
+        slowCypressDown(false)
+    })
+    it('Test Doctor can paginate through patient records', () => {
+
+        // Navigate to view patient
+        cy.intercept('*').as('res')
+        cy.visit('/doctorinfo/viewpatient?patientUsername=dakotawong1').wait('@res', {responseTimeout: 10000, requestTimeout:10000})
+
+        // Slow down cypress interactions
+        slowCypressDown(500)
+
+        // Click refresh button
+        cy.intercept('*').as('res')
+        cy.get('[data-cy="refesh-table-button"]').click()
+            .wait('@res', {responseTimeout: 10000, requestTimeout:10000})
+        
+        //Assert user starts on page 1
+        cy.get('[data-cy="PaginationNavigator-currentpage"]').should('have.text', '1')
+        
+        // Paginate Forward
+        cy.get('[data-cy="PaginationNavigator-rightclick"] > path').click()
+            .wait('@res', {responseTimeout: 10000, requestTimeout:10000})
+     
+        // Assert user is now on page 2
+        cy.get("[data-cy=PatientHistoryTable-record-field]", { timeout: 10000 }).first().should('be.visible')
+        cy.get('[data-cy="PaginationNavigator-currentpage"]', { timeout: 10000 }).should('have.text', '2')
+
+        // Go back to page 1
+        cy.get('[data-cy="PaginationNavigator-leftclick"] > path').click()
+            .wait('@res', {responseTimeout: 10000, requestTimeout:10000})
+
+
+        //Assert user goes back to page 1
+        cy.get("[data-cy=PatientHistoryTable-record-field]", { timeout: 10000 }).first().should('be.visible')
+        cy.get('[data-cy="PaginationNavigator-currentpage"]', { timeout: 10000 }).should('have.text', '1')
+
+        // Paginate Forward
+        cy.get('[data-cy="PaginationNavigator-rightclick"] > path').click()
+            .wait('@res', {responseTimeout: 10000, requestTimeout:10000})
+
+        // //Assert user goes back to page 2
+        cy.get("[data-cy=PatientHistoryTable-record-field]", { timeout: 10000 }).first().should('be.visible')
+        cy.get('[data-cy="PaginationNavigator-currentpage"]', { timeout: 10000 }).should('have.text', '2')
+
+        // Click refresh button
+        cy.get('[data-cy="refesh-table-button"]').click()
+            .wait('@res', {responseTimeout: 10000, requestTimeout:10000})
+
+        // //Assert user starts on page 1
+        cy.get("[data-cy=PatientHistoryTable-record-field]", { timeout: 10000 }).first().should('be.visible')
+        cy.get('[data-cy="PaginationNavigator-currentpage"]', { timeout: 10000 }).should('have.text', '1')
+
+        // Return cypress interactions to regular speed
+        slowCypressDown(false)
+    })
+})
