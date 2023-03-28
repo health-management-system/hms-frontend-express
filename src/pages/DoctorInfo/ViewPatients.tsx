@@ -9,6 +9,7 @@ import { doctorRequests } from '../../utils/requests/doctor';
 import { requestConfig } from '../../utils/requests/requestConfig';
 import PaginationNavigator from "../../components/PatientInfo/PaginationNavigator";
 import { BiRefresh } from "react-icons/bi";
+import { BsSearch } from 'react-icons/bs'
 
 // const patientList = [
 //     {
@@ -40,13 +41,14 @@ function ViewPatients() {
     const [currentPage, setCurrentPage] = useState(1);
     const [isNavigating, setIsNavigating] = useState(false);
     const [lastPage, setLastPage] = useState(1);
+    const [keyword, setKeyword] = useState("");
 
     const gotoPatientInfo = (patientUsername: string) => {
         navigate("/doctorinfo/viewpatient?patientUsername=" + patientUsername);
     };
 
     const loadPatients = async(currentPage:number)=>{
-        const res = await doctorRequests(requestConfig).getPatients(currentPage.toString());
+        const res = await doctorRequests(requestConfig).getPatients(currentPage.toString(), keyword);
         console.log(res)
         if (res.result){
             setPatientList(res.result.patients.map(patient=>({id: patient.username, patientUsername: patient.username, patientName: `${patient.firstname} ${patient.lastname}`})))
@@ -96,6 +98,7 @@ function ViewPatients() {
             <div className="flex w-full justify-between items-center mb-5">
                 <Subtitle title="Patient List:" />
                 <div className="space-x-6 flex">
+                    <input className=' border-black border-2 px-2 py-2 bg-secCol rounded-md' type='text' placeholder="Keywords" onChange={(event)=>setKeyword(event.target.value)}/>
                     {/* Refresh */}
                     <BiRefresh
                         data-cy={"refesh-table-button"}

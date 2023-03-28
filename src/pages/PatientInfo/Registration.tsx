@@ -19,7 +19,7 @@ function RegistrationPage() {
     setIsLoading(true)
     if(user) {
 
-      let results = await patientRequests(requestConfig).getPatientInfo(username, "1")
+      let results = await patientRequests(requestConfig).getPatientInfo(username, "1", "")
       // if (results.result && results.result.error){
       //   setIsLoading(false)
       //   return

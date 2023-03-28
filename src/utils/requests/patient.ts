@@ -23,14 +23,16 @@ export const patientRequests = (config: RequestConfig) => {
         },
         getPatientInfo: async (
             username: string,
-            page: string
+            page: string,
+            searchQuery: string
         ) => {
             const params1 = new URLSearchParams({
                 username
             });
             const params2 = new URLSearchParams({
                 username,
-                page
+                page,
+                searchQuery
             });
 
             let response: {
@@ -45,7 +47,7 @@ export const patientRequests = (config: RequestConfig) => {
 
             const info = await axios.get(config.baseUrl + "patient/patientinfo", { params: params1 })
             const records = await axios.get(config.baseUrl + "patient/records", { params: params2 })
-            
+
             response.result = {
                 patientInfo: info.data,
                 records: records.data,

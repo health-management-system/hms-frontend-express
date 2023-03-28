@@ -89,9 +89,9 @@ export const doctorRequests = (config:RequestConfig) => {
             return response
         },
 
-        getPatients: async(page:string) =>{
+        getPatients: async(page:string, searchQuery: string) =>{
 
-            const params = new URLSearchParams({page});
+            const params = new URLSearchParams({page, searchQuery});
 
             let response: {statusCode: number, result:getPatientResponse|null|undefined} = {statusCode:0, result:null}
 
