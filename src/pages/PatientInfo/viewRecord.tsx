@@ -29,6 +29,8 @@ function ViewRecord() {
             const result = await generalRequests(requestConfig).getRecord(id)
             console.log(result)
             if(result.statusCode === 200 && Object.keys(result.result).length > 1){
+                result.result.date = new Intl.DateTimeFormat("en-US", {dateStyle: "long", timeStyle:"short"}).format(new Date(result.result.date))
+
                 setRecord(result.result)
                 setDoctorUsername(result.result.doctorUsername)
                 setFoundRecord(true)

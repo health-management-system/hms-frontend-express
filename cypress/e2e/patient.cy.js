@@ -93,7 +93,7 @@ describe('Patient Tests', () => {
         // Check if updated info appears on profile
         cy.get(':nth-child(1) > .user-info-span').should('have.text', firstname)
         cy.get(':nth-child(2) > .user-info-span').should('have.text', lastname)
-        cy.get(':nth-child(3) > .user-info-span').should('have.text', '1995-10-09T04:00:00.000Z')
+        cy.get(':nth-child(3) > .user-info-span').should('have.text', 'Monday, October 9, 1995')
         cy.get(':nth-child(4) > .user-info-span').should('have.text', email)
         cy.get(':nth-child(5) > .user-info-span').should('have.text', address)
         cy.get(':nth-child(6) > .user-info-span').should('have.text', phoneNumber)

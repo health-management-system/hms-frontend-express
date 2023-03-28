@@ -73,13 +73,11 @@ describe('Existing Doctor Tests', () => {
         // generate info
         const patientID = "test_record_patient"
         const subject = "Cypress E2E Tests"
-        const date = "10/04/2023"
         const log = "This is a cypress E2E test log"
 
         // Enter the info
         cy.get('#patient-input').type(patientID)
         cy.get('#subject-input').type(subject)
-        cy.get('#date-input').type(date)
         cy.get('#log-input').type(log)
 
         // Post record and listen for response
