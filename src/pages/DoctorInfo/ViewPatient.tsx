@@ -33,6 +33,7 @@ function Profile() {
     const [currentPage, setCurrentPage] = useState(1);
     const [isNavigating, setIsNavigating] = useState(false);
     const [paginationKeys, setPaginationKeys] = useState<string[]>([]);
+    const [keyword, setKeyword] = useState("");
 
     const loadInfoInit = async (username: string) => {
         setIsLoadingPH(true);
@@ -40,6 +41,7 @@ function Profile() {
         const result = await patientRequests(requestConfig).getPatientInfo(
             username,
             currentPage.toString(),
+            keyword
         );
         setPatientInfoAndRecords(result.result);
         if (result.result != null && !result.result.error) {
@@ -138,6 +140,7 @@ function Profile() {
                 {/* Health record title */}
                 <Subtitle title="Patient Records:" />
                 <div className="space-x-6 flex">
+                <input className=' border-black border-2 px-2 py-2 bg-secCol' type='text' placeholder="Keywords" onChange={(event)=>setKeyword(event.target.value)}/>
                     {/* Refresh */}
                     <BiRefresh
                         data-cy={"refesh-table-button"}
