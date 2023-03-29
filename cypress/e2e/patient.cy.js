@@ -221,6 +221,16 @@ describe('Patient Tests', () => {
         cy.get("[data-cy=PatientHistoryTable-record-field]", { timeout: 10000 }).first().should('be.visible')
         cy.get('[data-cy="PaginationNavigator-currentpage"]', { timeout: 10000 }).should('have.text', '1')
 
+        // Enter a keyword
+        cy.get('input').type('asdfghjkl12904')
+
+        // Click refresh button
+        cy.get('[data-cy="refesh-table-button"]').click()
+            .wait('@res', {responseTimeout: 10000, requestTimeout:10000})
+
+        // Check keyword results (in this case no records found)
+        cy.get('[data-cy="PatientHistoryTable-loading-text"]').should('be.visible')
+
         // Return cypress interactions to regular speed
         slowCypressDown(false)
     })

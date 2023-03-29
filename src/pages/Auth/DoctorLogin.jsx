@@ -8,6 +8,8 @@ function DoctorLogin () {
     const[inputField,setInputField]=useState({UserName:"",Password:""})
     const[button_true,setButtonState]=useState(true)
     const [loading, setLoading] = useState(false)
+    const [hasError, setError] = useState(false)
+    const [errorMessage, setErrorMessage] = useState("")
     const navigate = useNavigate();
     
     const handleSubmit = async(event) => {
@@ -32,6 +34,8 @@ function DoctorLogin () {
         setInputField({UserName:"",Password:""})
         navigate("/")
       } catch (err) {
+        setErrorMessage('Username or password is invalid')
+        setError(true)
         setLoading(false)
         console.log('Error: Something went wrong')
       }
@@ -45,12 +49,14 @@ function DoctorLogin () {
         <div className="parent">
             <div className="child">
             <img src={require("../../assets/user_1.png")} alt="random_image" className="image"/>
+                <h1 className='login-header'>Doctor Login</h1>
                 <form onSubmit={handleSubmit} id="form_login">                
                     <p>User Name:</p>
                     <input className='login-input' name="UserName" type="text" value={inputField.UserName} onChange={(event)=>setInputField({...inputField, [event.target.name]: event.target.value})} placeholder="Enter Username"/>
                     <p>Password:</p>
                     <input className='login-input' name="Password" type="password" value={inputField.Password} onChange={(event)=>setInputField({...inputField, [event.target.name]: event.target.value})} placeholder="Enter Passowrd"/>
                     <br></br>
+                    {hasError ? <h1 className='login-error-message'>{errorMessage}</h1> : null}
                     <div>
                         <button type="submit" disabled={button_true}>{loading ? <div className='flex space-x-3 justify-center items-center'><AiOutlineLoading3Quarters className="animate-spin text-white" /><h1>Loading</h1></div>:<span>Submit</span>}</button>
                     </div>

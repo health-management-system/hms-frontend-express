@@ -82,4 +82,20 @@
    text-align: center;
 }
 
+.login-header {
+   width: 80%;
+   margin-left: 10%;
+   font-size: x-large;
+   font-weight: bolder;
+   text-align: center;
+   margin-top: 0.5em;
+   margin-bottom: 0.2em;
+}
+
+.login-error-message {
+   width: 80%;
+   margin-left: 10%;
+   color: red;
+}
+
 

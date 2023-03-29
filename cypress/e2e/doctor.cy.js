@@ -156,7 +156,7 @@ describe('Existing Doctor Tests', () => {
         cy.url().should('include', '/doctorinfo/viewpatients')
 
         // Click to view a patient
-        cy.intercept('http://localhost:4000/patient/patientinfo?username=*').as('res')
+        cy.intercept('http://localhost:4000/patient/patientinfo*').as('res')
         cy.get("[data-cy=PatientHistoryTable-record-field]").first().click()
             .wait('@res', {responseTimeout: 10000, requestTimeout:10000})
         
@@ -190,8 +190,8 @@ describe('Existing Doctor Tests', () => {
         cy.get('.homepage-button-div > :nth-child(1)').should('be.visible')
         
         // Check for page not found header
-        cy.intercept('GET', 'http://localhost:4000/doctor/getpatients?page=1', {statusCode: 400})
-        cy.visit('/doctorinfo/viewpatients').wait('@res', {responseTimeout: 10000, requestTimeout:10000})
+        cy.intercept('GET', 'http://localhost:4000/doctor/getpatients*', {statusCode: 400}).as('patients')
+        cy.visit('/doctorinfo/viewpatients').wait('@patients', {responseTimeout: 10000, requestTimeout:10000})
 
         // Check that we have returned home
         cy.get('[data-cy="PatientHistoryTable-loading-text"]').should('be.visible')
@@ -257,6 +257,15 @@ describe('Existing Doctor Tests', () => {
         cy.get("[data-cy=PatientHistoryTable-record-field]", { timeout: 10000 }).first().should('be.visible')
         //cy.get('[data-cy="PaginationNavigator-currentpage"]', { timeout: 10000 }).should('have.text', '1')
 
+        // Enter a keyword
+        cy.get('input').type('asdfghjkl12904')
+        // Click refresh button
+        cy.get('[data-cy="refesh-table-button"]').click()
+            .wait('@res', {responseTimeout: 10000, requestTimeout:10000})
+
+        // Check keyword results (in this case no records found)
+        cy.get('[data-cy="PatientHistoryTable-loading-text"]').should('be.visible')
+
         // Return cypress interactions to regular speed
         slowCypressDown(false)
     })
@@ -309,6 +318,16 @@ describe('Existing Doctor Tests', () => {
         // //Assert user starts on page 1
         cy.get("[data-cy=PatientHistoryTable-record-field]", { timeout: 10000 }).first().should('be.visible')
         cy.get('[data-cy="PaginationNavigator-currentpage"]', { timeout: 10000 }).should('have.text', '1')
+
+        // Enter a keyword
+        cy.get('input').type('asdfghjkl12904')
+
+        // Click refresh button
+        cy.get('[data-cy="refesh-table-button"]').click()
+            .wait('@res', {responseTimeout: 10000, requestTimeout:10000})
+
+        // Check keyword results (in this case no records found)
+        cy.get('[data-cy="PatientHistoryTable-loading-text"]').should('be.visible')
 
         // Return cypress interactions to regular speed
         slowCypressDown(false)
