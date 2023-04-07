@@ -46,6 +46,7 @@ module.exports = defineConfig({
 
   e2e: {
     baseUrl: 'http://localhost:3000',
+    pageLoadTimeout: 120000,
     setupNodeEvents(on, config) {
       require('@cypress/code-coverage/task')(on, config)
       // include any other plugin code...
