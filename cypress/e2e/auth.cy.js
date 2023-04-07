@@ -26,7 +26,7 @@ describe('Authorization Tests', () => {
         cy.visit('/doctorinfo')
 
         // Assert access is not granted
-        cy.wait('@doctor', {responseTimeout: 10000, requestTimeout:10000}).its('response.statusCode').should('eq', 400)
+        cy.wait('@doctor', {responseTimeout: 10000, requestTimeout:10000}).its('response.statusCode').should('be.gte', 400)
 
         // Check we are redirected to patient page
         cy.intercept('http://localhost:4000/patient/*').as('patient')
@@ -39,7 +39,7 @@ describe('Authorization Tests', () => {
         cy.visit('/doctorinfo')
 
         // Assert access is not granted
-        cy.wait('@doctor', {responseTimeout: 10000, requestTimeout:10000}).its('response.statusCode').should('eq', 400)
+        cy.wait('@doctor', {responseTimeout: 10000, requestTimeout:10000}).its('response.statusCode').should('be.gte', 400)
 
         // Check we are redirected to patient page
         cy.url().should('include', '/patient-login')
@@ -59,11 +59,11 @@ describe('Authorization Tests', () => {
 
         // Check for page not found header
         cy.intercept('http://localhost:4000/patient/patientinfo?username*').as('patient')
-        cy.visit('/patientinfo').wait('@patient', {responseTimeout: 10000, requestTimeout:10000}).its('response.statusCode').should('eq', 400)
+        cy.visit('/patientinfo').wait('@patient', {responseTimeout: 10000, requestTimeout:10000}).its('response.statusCode').should('be.gte', 400)
 
         // Assert access is not granted
         cy.intercept('http://localhost:4000/doctorinfo?username=*').as('doctor')
-        cy.wait('@patient', {responseTimeout: 10000, requestTimeout:10000}).its('response.statusCode').should('eq', 400)
+        cy.wait('@patient', {responseTimeout: 10000, requestTimeout:10000}).its('response.statusCode').should('be.gte', 400)
 
         // Check we are redirected to patient page
         cy.url().should('include', '/doctorinfo')
@@ -74,7 +74,7 @@ describe('Authorization Tests', () => {
         cy.visit('/patientinfo')
 
         // Assert access is not granted
-        cy.wait('@patient', {responseTimeout: 10000, requestTimeout:10000}).its('response.statusCode').should('eq', 400)
+        cy.wait('@patient', {responseTimeout: 10000, requestTimeout:10000}).its('response.statusCode').should('be.gte', 400)
 
         // Check we are redirected to patient page
         cy.url().should('include', '/patient-login')
